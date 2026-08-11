@@ -1,0 +1,55 @@
+<!-- Wrapper to center the card on the entire screen with a dark background -->
+<div class="min-h-screen flex items-center justify-center bg-gray-900 p-4">
+    
+    <!-- The Login Card with dark theme colors -->
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl shadow-black/50 w-full max-w-md border border-gray-700">
+        
+        <h3 class="text-3xl font-extrabold mb-8 text-center text-white">Welcome Back</h3>
+        
+        <form [formRoot]="loginForm" (submit)="onSubmit()" class="space-y-6">
+            
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-semibold text-gray-300 mb-2">Email or Username</label>
+                <input 
+                    type="text" 
+                    id="email" 
+                    class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200" 
+                    [formField]="loginForm.email" 
+                    placeholder="Enter your email" 
+                />
+                
+                <!-- Error Message with a lighter red for better contrast on dark backgrounds -->
+                @if(loginForm.email().touched() && loginForm.email().invalid()) {
+                    <p class="text-red-400 text-sm mt-1.5 font-medium">{{ loginForm.email().errors()[0].message }}</p>
+                }
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-sm font-semibold text-gray-300 mb-2">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200" 
+                    [formField]="loginForm.password" 
+                    placeholder="••••••••" 
+                />
+                
+                <!-- Error Message -->
+                @if(loginForm.password().touched() && loginForm.password().invalid()) {
+                    <p class="text-red-400 text-sm mt-1.5 font-medium">{{ loginForm.password().errors()[0].message }}</p>
+                }
+            </div>
+
+            <!-- Submit Button adjusted for dark theme -->
+            <button 
+                type="submit" 
+                class="w-full cursor-pointer bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 shadow-md disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed disabled:shadow-none mt-2" 
+                [disabled]="!loginForm().valid()">
+                Login
+            </button>
+
+        </form>
+    </div>
+</div>
