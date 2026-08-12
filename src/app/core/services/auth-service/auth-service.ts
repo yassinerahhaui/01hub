@@ -13,10 +13,11 @@ export class AuthService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
 
-  login(loginData: LoginModel) {
+  login(loginData: LoginModel): Observable<string>{
     // Implement login logic here
     const logData = `Basic ${btoa(`${loginData.email}:${loginData.password}`)}`;
     const headers = new HttpHeaders({ Authorization: logData });
+    
     return this.http.post(this.loginUrl,{}, {headers, responseType: 'text'}).pipe(
       tap((token: string) => {
         if (token && isPlatformBrowser(this.platformId)) {
@@ -33,6 +34,11 @@ export class AuthService {
   }
 
   logout() {
-    // Implement logout logic here
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        localStorage.removeItem('token');
+      }
+    }
   }
 }
